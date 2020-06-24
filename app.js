@@ -2,7 +2,7 @@
 class game {
     constructor(){
         this.score = 0;
-        this.gestureOptions = [];
+        this.gestureOptions = ['Scissors', 'Paper', 'Rock', 'Lizard', 'Spock'];
     }
 }
 
