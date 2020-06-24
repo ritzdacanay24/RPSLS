@@ -1,24 +1,32 @@
 
 class Game {
 
-    constructor(player1, player2){
+    constructor(){
         this.score = 0;
         this.gestureOptions = ['Scissors', 'Paper', 'Rock', 'Lizard', 'Spock'];
         this.maxGames = 3;
         this.playedGames = 0;
         this.marker = '---------------------';
+        this.gameMode = '';
 
-        this.player1 = new player(player1);
-        this.player2 = new player(player2);
     }
 
     run(){
         this.gameRules();
 
+        this.player1 = new player(this.player1);
+        this.player2 = new player(this.player2);
+
         console.log('Game Details');
         while(this.player1.points < this.maxGames &&  this.player2.points < this.maxGames){
-            this.player1.randomlySelectGestures(this.gestureOptions);
-            this.player2.randomlySelectGestures(this.gestureOptions);
+            
+            this.player1.selection = prompt('Player1: selct from list: ' + this.gestureOptions);
+
+            if(this.gameMode == 'Single'){
+                this.player2.chooseRandomGesture(this.gestureOptions);
+            }else{
+                this.player2.selection = prompt('Player2: selct from list: ' + this.gestureOptions);
+            }
             
             this.validateResults();
         }
@@ -35,8 +43,6 @@ class Game {
 
     diplayWinner(){
         console.log(this.marker);
-        console.log(this.player1);
-        console.log(this.player2);
         if(this.player1.points > this.player2.points) {
             console.log('Game Results: ' + this.player1.name + " wins this game");
         }else {
@@ -101,27 +107,36 @@ class player {
         this.selection = "";
     }
 
-    randomlySelectGestures(options){
+    chooseRandomGesture(options){
         this.selection = options[Math.floor(Math.random() * options.length)];
+    }
+
+}
+
+class GameMode extends Game {
+
+    constructor(){
+        super()
+    }
+    single() {
+        console.log('single')
+        this.player1 = prompt('First player name?');
+        this.player2 = 'Devcode';
+        this.gameMode = 'Single';
+        this.run()
+        
+      }
+
+    mulitiPlayer() {
+        console.log('mulitiPlayer')
+        this.player1 = prompt('First player name?');
+        this.player2 = prompt('Second player name?');
+        this.gameMode = 'Mulitplayer';
+        this.run()
     }
 }
 
-// class GameMode extends Game {
 
-//     constructor(name, name1){
-//         super(name, name1)
-//     }
-//     single() {
-//         console.log('single')
-//         console.log(this)
-//       }
-
-//     mulitiPlayer() {
-//         console.log('mulitiPlayer')
-//         console.log(this)
-//     }
-// }
-
-let rungame = new Game('Ritz', 'Devcode');
-rungame.run()
+let rungame = new GameMode();
+rungame.mulitiPlayer()
 
