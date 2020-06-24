@@ -1,5 +1,6 @@
 
 class game {
+
     constructor(){
         this.score = 0;
         this.gestureOptions = ['Scissors', 'Paper', 'Rock', 'Lizard', 'Spock'];
@@ -8,8 +9,8 @@ class game {
         this.player2 = new player('DevCode');
     }
 
-    randomlySelectGestures(){
-        return this.gestureOptions[Math.floor(Math.random() * this.gestureOptions.length)];
+    run(){
+        this.gameRules();
     }
 
     gameRules(){
@@ -23,8 +24,12 @@ class player {
         this.points = 0;
         this.name = name;
     }
+
+    randomlySelectGestures(){
+        return this.gestureOptions[Math.floor(Math.random() * this.gestureOptions.length)];
+    }
 }
 
 let rungame = new game();
-console.log(rungame.randomlySelectGestures())
+rungame.run();
 
