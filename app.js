@@ -1,15 +1,15 @@
 
-class game {
+class Game {
 
-    constructor(){
+    constructor(player1, player2){
         this.score = 0;
         this.gestureOptions = ['Scissors', 'Paper', 'Rock', 'Lizard', 'Spock'];
         this.maxGames = 3;
         this.playedGames = 0;
         this.marker = '---------------------';
 
-        this.player1 = new player('Ritz');
-        this.player2 = new player('DevCode');
+        this.player1 = new player(player1);
+        this.player2 = new player(player2);
     }
 
     run(){
@@ -17,10 +17,10 @@ class game {
 
         console.log('Game Details');
         while(this.player1.points < this.maxGames &&  this.player2.points < this.maxGames){
-            let playerSelection1 = this.player1.randomlySelectGestures(this.gestureOptions);
-            let playerSelection2 = this.player2.randomlySelectGestures(this.gestureOptions);
+            this.player1.randomlySelectGestures(this.gestureOptions);
+            this.player2.randomlySelectGestures(this.gestureOptions);
             
-            this.validateResults(playerSelection1, playerSelection2);
+            this.validateResults();
         }
 
         this.diplayWinner();
@@ -35,6 +35,8 @@ class game {
 
     diplayWinner(){
         console.log(this.marker);
+        console.log(this.player1);
+        console.log(this.player2);
         if(this.player1.points > this.player2.points) {
             console.log('Game Results: ' + this.player1.name + " wins this game");
         }else {
@@ -42,39 +44,39 @@ class game {
         }
     }
 
-    validateResults(p1, p2){
+    validateResults(){
 
-        console.log('Game: ' + this.playedGames + ': ' + p1 + ' ' + p2);
+        console.log('Game: ' + this.playedGames + ': ' + this.player1.selection + ' ' + this.player2.selection);
 
-        if(p1 === p2){
+        if(this.player1.selection === this.player2.selection){
             console.log('Its a tie game!');
         }else{
-            if (p1 === 'Rock'){
-                if (p2 === 'Paper' || p2 === 'Spock'){
+            if (this.player1.selection === 'Rock'){
+                if (this.player2.selection === 'Paper' || this.player2.selection === 'Spock'){
                     this.incrementScoreAndDisplayMessage(this.player2)
                 } else {
                     this.incrementScoreAndDisplayMessage(this.player1)
                 }
-            }else if (p1 === 'Paper'){
-                if (p2 === 'Scissors' || p2 === 'Lizard') {
+            }else if (this.player1.selection === 'Paper'){
+                if (this.player2.selection === 'Scissors' || this.player2.selection === 'Lizard') {
                     this.incrementScoreAndDisplayMessage(this.player2)
                 } else {
                     this.incrementScoreAndDisplayMessage(this.player1)
                 }
-            }else if (p1 === 'Scissors'){
-                if (p2 === 'Rock' || p2 === 'Spock') {
+            }else if (this.player1.selection === 'Scissors'){
+                if (this.player2.selection === 'Rock' || this.player2.selection === 'Spock') {
                     this.incrementScoreAndDisplayMessage(this.player2)
                 } else {
                     this.incrementScoreAndDisplayMessage(this.player1)
                 }
-            }else if (p1 === 'Lizard'){
-                if (p2 === 'Rock' || p2 === 'Scissors') {
+            }else if (this.player1.selection === 'Lizard'){
+                if (this.player2.selection === 'Rock' || this.player2.selection === 'Scissors') {
                     this.incrementScoreAndDisplayMessage(this.player2)
                 } else {
                     this.incrementScoreAndDisplayMessage(this.player1)
                 }
-            }else if (p1 === 'Spock'){
-                if (p2 === 'Lizard' || p2 === 'Paper') {
+            }else if (this.player1.selection === 'Spock'){
+                if (this.player2.selection === 'Lizard' || this.player2.selection === 'Paper') {
                     this.incrementScoreAndDisplayMessage(this.player2)
                 } else {
                     this.incrementScoreAndDisplayMessage(this.player1)
@@ -96,13 +98,30 @@ class player {
     constructor(name){
         this.points = 0;
         this.name = name;
+        this.selection = "";
     }
 
     randomlySelectGestures(options){
-        return options[Math.floor(Math.random() * options.length)];
+        this.selection = options[Math.floor(Math.random() * options.length)];
     }
 }
 
-let rungame = new game();
-rungame.run();
+// class GameMode extends Game {
+
+//     constructor(name, name1){
+//         super(name, name1)
+//     }
+//     single() {
+//         console.log('single')
+//         console.log(this)
+//       }
+
+//     mulitiPlayer() {
+//         console.log('mulitiPlayer')
+//         console.log(this)
+//     }
+// }
+
+let rungame = new Game('Ritz', 'Devcode');
+rungame.run()
 
