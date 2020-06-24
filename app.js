@@ -4,6 +4,10 @@ class game {
         this.score = 0;
         this.gestureOptions = ['Scissors', 'Paper', 'Rock', 'Lizard', 'Spock'];
     }
+
+    randomlySelectGestures(){
+        return this.gestureOptions[Math.floor(Math.random() * this.gestureOptions.length)];
+    }
 }
 
 class player {
@@ -12,4 +16,5 @@ class player {
         this.name = name;
     }
 }
+
 
