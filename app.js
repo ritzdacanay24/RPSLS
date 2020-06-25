@@ -125,7 +125,15 @@ class GameMode extends Game {
         this.gameMode = 'Single';
         this.run()
         
-      }
+    }
+      
+    mulitiPlayer() {
+        console.log('mulitiPlayer')
+        this.player1 = prompt('First player name?');
+        this.player2 = prompt('Second player name?');
+        this.gameMode = 'Mulitplayer';
+        this.run()
+    }
 }
 
 
