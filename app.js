@@ -20,6 +20,17 @@ class Game {
         console.log('Game Details');
         while(this.player1.points < this.maxGames &&  this.player2.points < this.maxGames){
             
+            function showConfirm() {
+                let playerSelection1 = (prompt("Player1: selct from list: " + this.gestureOptions, ""));
+                if (this.gestureOptions.includes(playerSelection1)) {
+                } else {
+                    alert("Please select from available list.");
+                    showConfirm()
+                }
+            }
+
+            showConfirm();
+
             this.player1.selection = prompt('Player1: selct from list: ' + this.gestureOptions);
 
             if(this.gameMode == 'Single'){
@@ -132,11 +143,20 @@ class GameMode extends Game {
         this.player1 = prompt('First player name?');
         this.player2 = prompt('Second player name?');
         this.gameMode = 'Mulitplayer';
+
+        if(!this.player1){
+            this.mulitiPlayer()
+            return;
+        }else if(!this.player2){
+            this.mulitiPlayer()
+            return;
+        }
+
         this.run()
     }
 }
 
 
 let rungame = new GameMode();
-rungame.single();
+rungame.mulitiPlayer();
 
