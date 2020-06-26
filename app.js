@@ -1,4 +1,3 @@
-
 class Game {
 
     constructor(){
@@ -20,16 +19,7 @@ class Game {
         console.log('Game Details');
         while(this.player1.points < this.maxGames &&  this.player2.points < this.maxGames){
             
-            function showConfirm() {
-                let playerSelection1 = (prompt("Player1: selct from list: " + this.gestureOptions, ""));
-                if (this.gestureOptions.includes(playerSelection1)) {
-                } else {
-                    alert("Please select from available list.");
-                    showConfirm()
-                }
-            }
-
-            showConfirm();
+           
 
             this.player1.selection = prompt('Player1: selct from list: ' + this.gestureOptions);
 
@@ -112,51 +102,29 @@ class Game {
 }
 
 class player {
+    //has the ability to select their gestures
+    //player determines who has won. 
+    //keeps scores
     constructor(name){
         this.points = 0;
         this.name = name;
         this.selection = "";
+        this.gestureOptions = ['Scissors', 'Paper', 'Rock', 'Lizard', 'Spock'];
     }
 
     chooseRandomGesture(options){
         this.selection = options[Math.floor(Math.random() * options.length)];
     }
 
+    chooseGesture(options){
+        this.selection = options[Math.floor(Math.random() * options.length)];
+    }
+
 }
 
-class GameMode extends Game {
+class Human extends player {
 
-    constructor(){
-        super()
-    }
-    single() {
-        console.log('single')
-        this.player1 = prompt('First player name?');
-        this.player2 = 'Devcode';
-        this.gameMode = 'Single';
-        this.run()
-        
-    }
-      
-    mulitiPlayer() {
-        console.log('mulitiPlayer')
-        this.player1 = prompt('First player name?');
-        this.player2 = prompt('Second player name?');
-        this.gameMode = 'Mulitplayer';
-
-        if(!this.player1){
-            this.mulitiPlayer()
-            return;
-        }else if(!this.player2){
-            this.mulitiPlayer()
-            return;
-        }
-
-        this.run()
-    }
 }
-
 
 let rungame = new GameMode();
 rungame.mulitiPlayer();
-
