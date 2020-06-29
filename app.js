@@ -10,6 +10,7 @@ class Game {
 
     }
 
+    //main funtion to run game.
     run(){
         this.gameRules();
 
@@ -17,23 +18,39 @@ class Game {
         this.player2 = new player(this.player2);
 
         console.log('Game Details');
+
+        //run loop until one of the playes reaches the max games. 
         while(this.player1.points < this.maxGames &&  this.player2.points < this.maxGames){
             
-           
-
-            this.player1.selection = prompt('Player1: selct from list: ' + this.gestureOptions);
-
-            if(this.gameMode == 'Single'){
-                this.player2.chooseRandomGesture(this.gestureOptions);
-            }else{
-                this.player2.selection = prompt('Player2: selct from list: ' + this.gestureOptions);
-            }
+            //for each round, make sure the entered gesture is valid. 
+            this.validateGesture(this.player1);
             
+            //if game mode is single, randomly select a gesture value for the computer.
+            if(this.gameMode == 'Single'){
+                this.player2.selection = this.player2.chooseRandomGesture(this.gestureOptions);
+            }else{
+                
+                //if game mode is multiplayer, lets get the input from the human for the second player.
+                this.validateGesture(this.player2);
+            }
+
+            //get the round winner between the two players. 
             this.validateResults();
         }
 
         this.diplayWinner();
 
+    }
+
+    //values entered by users should be a valid entry.
+    validateGesture(player){
+        player.selection = prompt(player.name + ': select from list: ' + this.gestureOptions)
+
+        if(!this.gestureOptions.includes(player.selection)){
+            alert('Incorrect value. Please try again.');
+            this.validateGesture(player)
+        }
+        
     }
 
     gameRules(){
@@ -55,9 +72,11 @@ class Game {
 
         console.log('Game: ' + this.playedGames + ': ' + this.player1.selection + ' ' + this.player2.selection);
 
+        //compare selection from player 1 and player 2 and add 1 point to the player who won. 
         if(this.player1.selection === this.player2.selection){
             console.log('Its a tie game!');
         }else{
+
             if (this.player1.selection === 'Rock'){
                 if (this.player2.selection === 'Paper' || this.player2.selection === 'Spock'){
                     this.incrementScoreAndDisplayMessage(this.player2)
@@ -93,7 +112,6 @@ class Game {
 
         this.playedGames++;
     }
-
     
     incrementScoreAndDisplayMessage(playerInfo){
         console.log(playerInfo.name + ' wins the round!')
@@ -102,29 +120,54 @@ class Game {
 }
 
 class player {
-    //has the ability to select their gestures
-    //player determines who has won. 
-    //keeps scores
     constructor(name){
         this.points = 0;
         this.name = name;
         this.selection = "";
-        this.gestureOptions = ['Scissors', 'Paper', 'Rock', 'Lizard', 'Spock'];
     }
 
     chooseRandomGesture(options){
-        this.selection = options[Math.floor(Math.random() * options.length)];
-    }
-
-    chooseGesture(options){
-        this.selection = options[Math.floor(Math.random() * options.length)];
+        return options[Math.floor(Math.random() * options.length)];
     }
 
 }
 
-class Human extends player {
+class GameMode extends Game {
+
+    constructor(){
+        super()
+    }
+    single() {
+        console.log('single')
+        this.player1 = prompt('First player name?');
+        this.player2 = 'Devcode';
+        this.gameMode = 'Single';
+        this.run()
+        
+    }
+      
+    mulitiPlayer() {
+        console.log('mulitiPlayer')
+        this.player1 = prompt('First player name?');
+        this.player2 = prompt('Second player name?');
+        this.gameMode = 'Mulitplayer';
+        this.run()
+    }
+
+    runMode(){
+        let gameMode = prompt('Enter 1 for single mode or 2 for multiplayer');
+        
+        if(gameMode == 1){
+            this.single();
+        }else if(gameMode == 2){
+            this.mulitiPlayer();
+        }
+    }
 
 }
 
-let rungame = new GameMode();
-rungame.mulitiPlayer();
+let runGame = new GameMode();
+runGame.runMode();
+
+
+
